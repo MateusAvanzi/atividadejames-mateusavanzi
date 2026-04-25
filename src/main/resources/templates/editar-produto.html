@@ -32,7 +32,7 @@
                 <div class="mb-3">
                     <label class="form-label">Nome do produto</label>
                     <input type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''"
-                           class="form-control" placeholder="Ex: Notebook Dell">
+                           class="form-control" placeholder="Ex: Fone Bluetooth JBL">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
                 </div>
                 <div class="mb-3">

@@ -48,6 +48,7 @@ public class DataLoader {
                 mateus.setRole("ROLE_ADMIN");
                 usuarioRepository.save(mateus);
             }
+
         };
     }
 }

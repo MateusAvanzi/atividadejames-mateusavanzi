@@ -64,8 +64,8 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
 
         String username = usuario.getUsername();
-        if ("joao".equalsIgnoreCase(username) || "arthur".equalsIgnoreCase(username)) {
-            throw new IllegalArgumentException("Usuarios master nao podem ser excluidos.");
+        if ("mateus".equalsIgnoreCase(username)) {
+            throw new IllegalArgumentException("O usuario admin principal (mateus) nao pode ser excluido.");
         }
 
         repository.deleteById(id);
