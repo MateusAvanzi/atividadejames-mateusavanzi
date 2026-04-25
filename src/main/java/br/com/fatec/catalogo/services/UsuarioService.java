@@ -33,10 +33,6 @@ public class UsuarioService {
             throw new IllegalArgumentException("Ja existe um usuario com esse username.");
         }
 
-        if (isNovo && repository.existsByEmailInstitucional(usuario.getEmailInstitucional())) {
-            throw new IllegalArgumentException("Ja existe um usuario com esse email institucional.");
-        }
-
         if (usuario.getRole() != null && !usuario.getRole().startsWith("ROLE_")) {
             usuario.setRole("ROLE_" + usuario.getRole());
         }

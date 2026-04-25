@@ -1,7 +1,6 @@
 package br.com.fatec.catalogo.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -26,11 +25,6 @@ public class UsuarioModel implements Serializable {
     )
     @Column(nullable = false, unique = true)
     private String username;
-
-    @NotBlank(message = "O email institucional e obrigatorio")
-    @Email(message = "Informe um email valido")
-    @Column(name = "email_institucional", nullable = false, unique = true)
-    private String emailInstitucional;
 
     @NotBlank(message = "A senha e obrigatoria")
     @Size(min = 8, message = "A senha deve ter no minimo 8 caracteres")
@@ -59,14 +53,6 @@ public class UsuarioModel implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmailInstitucional() {
-        return emailInstitucional;
-    }
-
-    public void setEmailInstitucional(String emailInstitucional) {
-        this.emailInstitucional = emailInstitucional;
     }
 
     public String getPassword() {

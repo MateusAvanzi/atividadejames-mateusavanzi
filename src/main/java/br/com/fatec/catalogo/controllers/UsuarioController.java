@@ -37,11 +37,7 @@ public class UsuarioController {
         try {
             service.salvar(usuario);
         } catch (IllegalArgumentException e) {
-            if (e.getMessage() != null && e.getMessage().toLowerCase().contains("email")) {
-                result.rejectValue("emailInstitucional", null, e.getMessage());
-            } else {
-                result.rejectValue("username", null, e.getMessage());
-            }
+            result.rejectValue("username", null, e.getMessage());
             return "cadastro-usuario";
         }
         return "redirect:/usuarios";
@@ -64,11 +60,7 @@ public class UsuarioController {
             usuario.setIdUsuario(id);
             service.salvar(usuario);
         } catch (IllegalArgumentException e) {
-            if (e.getMessage() != null && e.getMessage().toLowerCase().contains("email")) {
-                result.rejectValue("emailInstitucional", null, e.getMessage());
-            } else {
-                result.rejectValue("username", null, e.getMessage());
-            }
+            result.rejectValue("username", null, e.getMessage());
             return "cadastro-usuario";
         }
         return "redirect:/usuarios";

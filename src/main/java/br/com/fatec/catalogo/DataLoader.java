@@ -34,7 +34,6 @@ public class DataLoader {
             if (!usuarioRepository.existsByUsername("jose")) {
                 UsuarioModel jose = new UsuarioModel();
                 jose.setUsername("jose");
-                jose.setEmailInstitucional("jose@fatec.sp.gov.br");
                 jose.setPassword(passwordEncoder.encode("Jose@1234"));
                 jose.setRole("ROLE_USER");
                 usuarioRepository.save(jose);
@@ -43,7 +42,6 @@ public class DataLoader {
             if (!usuarioRepository.existsByUsername("mateus")) {
                 UsuarioModel mateus = new UsuarioModel();
                 mateus.setUsername("mateus");
-                mateus.setEmailInstitucional("mateus@fatec.sp.gov.br");
                 mateus.setPassword(passwordEncoder.encode("Mateus@1234"));
                 mateus.setRole("ROLE_ADMIN");
                 usuarioRepository.save(mateus);

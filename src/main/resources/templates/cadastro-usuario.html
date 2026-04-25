@@ -48,14 +48,6 @@
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Email institucional</label>
-                    <input type="email" th:field="*{emailInstitucional}" class="form-control"
-                           th:classappend="${#fields.hasErrors('emailInstitucional')} ? 'is-invalid' : ''"
-                           placeholder="nome@fatec.sp.gov.br">
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('emailInstitucional')}" th:errors="*{emailInstitucional}"></div>
-                </div>
-
                 <div class="mb-4">
                     <label class="form-label">Perfil</label>
                     <select th:field="*{role}" class="form-select"
