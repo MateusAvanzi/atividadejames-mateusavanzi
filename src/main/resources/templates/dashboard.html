@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar mb-0">
+    <div class="container" style="padding-top:0;padding-bottom:0;">
+        <a class="navbar-brand" href="/dashboard">FATEC - Catalogo</a>
+        <div class="d-flex align-items-center gap-2">
+            <a href="/produtos" class="btn btn-outline-light btn-sm">Produtos</a>
+            <a href="/categorias" class="btn btn-outline-light btn-sm">Categorias</a>
+            <a sec:authorize="hasRole('ADMIN')" href="/usuarios" class="btn btn-outline-light btn-sm">Usuarios</a>
+            <span class="text-white" th:text="'Ola, ' + ${username}"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Painel de Controle</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-4">Resumo rapido do sistema.</p>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="border rounded p-3">
+                        <h6 class="text-muted mb-1">Produtos</h6>
+                        <h3 th:text="${totalProdutos}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded p-3">
+                        <h6 class="text-muted mb-1">Categorias</h6>
+                        <h3 th:text="${totalCategorias}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+                    <div class="border rounded p-3">
+                        <h6 class="text-muted mb-1">Usuarios</h6>
+                        <h3 th:text="${totalUsuarios}">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 d-flex gap-2">
+                <a href="/produtos" class="btn btn-primary">Ver produtos</a>
+                <a href="/categorias" class="btn btn-secondary">Ver categorias</a>
+                <a sec:authorize="hasRole('ADMIN')" href="/categorias/novo" class="btn btn-success">Nova categoria</a>
+                <a sec:authorize="hasRole('ADMIN')" href="/produtos/novo" class="btn btn-success">Novo produto</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

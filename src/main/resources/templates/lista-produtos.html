@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogo de Produtos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar mb-0">
+    <div class="container" style="padding-top:0;padding-bottom:0;">
+        <a class="navbar-brand" href="/dashboard">FATEC - Catalogo</a>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+            <a href="/dashboard" class="btn btn-outline-light btn-sm">Dashboard</a>
+            <a href="/categorias" class="btn btn-outline-light btn-sm">Categorias</a>
+            <a sec:authorize="hasRole('ADMIN')" href="/usuarios" class="btn btn-outline-light btn-sm">Usuarios</a>
+            <span class="text-white" th:text="'Ola, ' + ${#authentication.name}"></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Produtos</h2>
+            <div class="d-flex gap-2 align-items-center">
+                <form th:action="@{/produtos}" method="get" class="d-flex gap-2 align-items-center flex-wrap">
+                    <input type="text" name="nome" th:value="${termoBusca}" class="form-control form-control-sm"
+                           placeholder="Buscar por nome..." style="width: 220px;">
+                    <select name="categoriaId" class="form-select form-select-sm" style="width: 220px;">
+                        <option value="">Todas as categorias</option>
+                        <option th:each="c : ${categorias}"
+                                th:value="${c.id}"
+                                th:selected="${categoriaSelecionada != null and categoriaSelecionada == c.id}"
+                                th:text="${c.nome}">
+                        </option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                    <a th:if="${(termoBusca != null and !termoBusca.isEmpty()) or categoriaSelecionada != null}"
+                       href="/produtos"
+                       class="btn btn-secondary btn-sm">Limpar</a>
+                </form>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a href="/produtos/novo" class="btn btn-success btn-sm">+ Novo</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th style="padding-left:24px;">Nome</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                        <th>Cadastrado em</th>
+                        <th sec:authorize="hasRole('ADMIN')">Acoes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(produtos)}">
+                        <td colspan="5" style="border:none;">
+                            <div class="empty-state">
+                                <p>Nenhum produto cadastrado ainda.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:each="p : ${produtos}">
+                        <td style="padding-left:24px;" data-label="Nome">
+                            <span class="product-name" th:text="${p.nome}"></span>
+                        </td>
+                        <td data-label="Categoria" th:text="${p.categoria.nome}"></td>
+                        <td data-label="Valor">
+                            <span class="product-price" th:text="'R$ ' + ${#numbers.formatDecimal(p.valor, 1, 'POINT', 2, 'COMMA')}"></span>
+                        </td>
+                        <td data-label="Cadastrado em" th:text="${#temporals.format(p.dataCadastro, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td data-label="Acoes" sec:authorize="hasRole('ADMIN')">
+                            <div class="action-group">
+                                <a th:href="@{/produtos/editar/{id}(id=${p.idProduto})}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/produtos/excluir/{id}(id=${p.idProduto})}" class="btn btn-danger btn-sm">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
